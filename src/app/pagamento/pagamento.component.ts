@@ -1,6 +1,10 @@
+
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -11,6 +15,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     MatCardModule,
+    MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
   ],
