@@ -1,0 +1,10 @@
+.input-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  
+    .half-width {
+      flex: 1;
+    }
+  }
+  

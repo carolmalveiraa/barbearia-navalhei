@@ -1,14 +1,24 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { AgendamentoComponent } from './agendamento/agendamento.component';
-import { CardInfoComponent } from './card-info/card-info.component';
-import { PagamentoComponent } from './pagamento/pagamento.component';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
-
-export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'agendamento', component: AgendamentoComponent },
-  { path: 'card-info', component: CardInfoComponent },
-  { path: 'pagamento', component: PagamentoComponent }
-];
+@NgModule({
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot([]), // Adicione as rotas aqui se necessário
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ],
+  bootstrap: [] // Remova o AppComponent daqui se estiver usando standalone components
+})
+export class AppModule { }

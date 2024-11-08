@@ -6,24 +6,56 @@
     <!-- Campo Número do Cartão -->
     <mat-form-field appearance="fill">
       <mat-label>Número do Cartão</mat-label>
-      <input matInput placeholder="0000 0000 0000 0000" mask="0000 0000 0000 0000">
+      <input matInput placeholder="0000 0000 0000 0000" type="text" maxlength="19">
     </mat-form-field>
 
     <!-- Div para Validade e CVV -->
-    <div class="row" style="display: flex; justify-content: space-between;">
+    <div class="input-row">
       
       <!-- Campo Validade -->
-      <mat-form-field appearance="fill" style="flex: 1; margin-right: 8px;">
+      <mat-form-field appearance="fill" class="half-width">
         <mat-label>Validade</mat-label>
-        <input matInput placeholder="MM/AA" mask="00/00">
+        <input matInput placeholder="MM/AA" type="text" maxlength="5">
       </mat-form-field>
 
       <!-- Campo CVV -->
-      <mat-form-field appearance="fill" style="flex: 1;">
+      <mat-form-field appearance="fill" class="half-width">
         <mat-label>CVV</mat-label>
-        <input matInput placeholder="000" mask="000">
+        <input matInput placeholder="000" type="text" maxlength="3">
+      </mat-form-field>
+    </div>
+
+    <!-- Botão Pagar -->
+    <button mat-raised-button color="accent" (click)="confirmarPagamento()">
+      Pagar R$ 50,00
+    </button>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-title>Pagamento</mat-card-title>
+  <mat-card-content>
+    <p>Valor: R$ 50,00</p>
+    
+    <!-- Campo Número do Cartão -->
+    <mat-form-field appearance="fill">
+      <mat-label>Número do Cartão</mat-label>
+      <input matInput placeholder="0000 0000 0000 0000" type="text" maxlength="19">
+    </mat-form-field>
+
+    <!-- Div para Validade e CVV -->
+    <div class="input-row">
+      
+      <!-- Campo Validade -->
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>Validade</mat-label>
+        <input matInput placeholder="MM/AA" type="text" maxlength="5">
       </mat-form-field>
 
+      <!-- Campo CVV -->
+      <mat-form-field appearance="fill" class="half-width">
+        <mat-label>CVV</mat-label>
+        <input matInput placeholder="000" type="text" maxlength="3">
+      </mat-form-field>
     </div>
 
     <!-- Botão Pagar -->

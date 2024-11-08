@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { NgxMaskModule } from 'ngx-mask';
 
 @Component({
   selector: 'app-pagamento',
@@ -14,7 +13,6 @@ import { NgxMaskModule } from 'ngx-mask';
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
-    NgxMaskModule.forRoot()
   ],
 })
 export class PagamentoComponent {
