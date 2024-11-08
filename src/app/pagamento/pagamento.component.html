@@ -62,4 +62,7 @@
 
     <button mat-raised-button color="accent" (click)="confirmarPagamento()" [disabled]="!isPagamentoValido()">Confirmar Pagamento</button>
   </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="voltar()">Voltar</button>
+  </mat-card-actions>
 </mat-card>

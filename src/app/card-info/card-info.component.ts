@@ -29,9 +29,17 @@ export class CardInfoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.nome = params['nome'] || 'Fulano';
       this.servico = params['servico'] || 'Corte de cabelo';
-      this.data = params['dataAgendamento'] || '14:00';
+      this.data = this.formatarData(params['dataAgendamento']) || '14:00';
       this.horario = params['horario'] || '14:00';
     });
+  }
+
+  formatarData(data: string): string {
+    const dataObj = new Date(data);
+    const dia = dataObj.getDate().toString().padStart(2, '0');
+    const mes = (dataObj.getMonth() + 1).toString().padStart(2, '0');
+    const ano = dataObj.getFullYear();
+    return `${dia}/${mes}/${ano}`;
   }
 
   pagar() {
