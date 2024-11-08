@@ -28,7 +28,7 @@ export class AgendamentoComponent {
 
   agendar() {
     if (this.nome) {
-      this.router.navigate(['/card-info']);
+      this.router.navigate(['/card-info']), { queryParams: { nome: this.nome } });
     } else {
       alert('Por favor, insira um nome');
     }

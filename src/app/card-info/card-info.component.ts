@@ -14,11 +14,17 @@ import { Router } from '@angular/router';
   ]
 })
 export class CardInfoComponent {
-  nome: string = 'Fulano';
+  nome: string = '';
   horario: string = '14:00';
 
-  constructor(private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.nome = params['nome'] || 'Fulano';
+    });
+  }
+  
   pagar() {
     this.router.navigate(['/pagamento']);
   }
