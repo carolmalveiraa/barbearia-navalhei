@@ -9,13 +9,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([]), // Adicione as rotas aqui se necessário
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -25,6 +25,6 @@ import {CommonModule} from '@angular/common';
     MatSnackBarModule,
     CommonModule
   ],
-  bootstrap: []
+  bootstrap: [] // Remova o AppComponent daqui se estiver usando standalone components
 })
 export class AppModule { }
