@@ -1,26 +1,49 @@
 <mat-card>
-  <mat-card-title>Agendamento</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="agendamentoForm" (ngSubmit)="agendar()">
-      <mat-form-field appearance="fill">
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="nome" placeholder="Digite seu nome">
-        <mat-error *ngIf="agendamentoForm.get('nome').invalid">Nome é obrigatório</mat-error>
-      </mat-form-field>
+  <form [formGroup]="agendamentoForm" (ngSubmit)="agendar()">
+    <h2>Agende seu Serviço</h2>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Serviço</mat-label>
-        <input matInput formControlName="servico" placeholder="Digite o serviço">
-        <mat-error *ngIf="agendamentoForm.get('servico').invalid">Serviço é obrigatório</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+      <mat-error *ngIf="agendamentoForm.get('nome')?.hasError('required')">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Data</mat-label>
-        <input matInput formControlName="dataAgendamento" placeholder="Digite a data">
-        <mat-error *ngIf="agendamentoForm.get('dataAgendamento').invalid">Data é obrigatória</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Serviço</mat-label>
+      <mat-select formControlName="servico" required>
+        <mat-option *ngFor="let servico of servicos" [value]="servico">
+          {{ servico }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="agendamentoForm.get('servico')?.hasError('required')">
+        Serviço é obrigatório
+      </mat-error>
+    </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Agendar</button>
-    </form>
-  </mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Data do Agendamento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dataAgendamento" [min]="minDate" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="agendamentoForm.get('dataAgendamento')?.hasError('required')">
+        Data é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Horário</mat-label>
+      <mat-select formControlName="horario" required>
+        <mat-option *ngFor="let horario of horariosDisponiveis" [value]="horario">
+          {{ horario }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="agendamentoForm.get('horario')?.hasError('required')">
+        Horário é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Agendar</button>
+  </form>
 </mat-card>

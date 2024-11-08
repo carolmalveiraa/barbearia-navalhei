@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+// import { AgendamentoService } from '../services/agendamento.service';
+
+
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +21,12 @@ export class AgendamentoService {
   private agendamentos: any[] = [];
 
   salvarAgendamento(agendamento: any): Observable<any> {
-    this.agendamentos.push(agendamento);
-    return of(agendamento); // Simula uma chamada HTTP bem-sucedida
+    try {
+      this.agendamentos.push(agendamento);
+      return of(agendamento); // Simula uma chamada HTTP bem-sucedida
+    } catch (error) {
+      return throwError(() => new Error('Falha ao salvar agendamento'));
+    }
   }
 
   getAgendamentos() {
@@ -34,53 +44,46 @@ export class AgendamentoService {
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class AgendamentoComponent {
   agendamentoForm: FormGroup;
+  servicos: string[] = ['Corte de cabelo', 'Barba', 'Corte e Barba', 'Coloração'];
+  horariosDisponiveis: string[] = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30'];
+  minDate: Date = new Date();
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private agendamentoService: AgendamentoService
+    @Inject(AgendamentoService) private agendamentoService: AgendamentoService
   ) {
     this.agendamentoForm = this.formBuilder.group({
       nome: ['', Validators.required],
       servico: ['', Validators.required],
-      dataAgendamento: ['', Validators.required]
+      dataAgendamento: ['', Validators.required],
+      horario: ['', Validators.required]
     });
   }
 
   agendar() {
     if (this.agendamentoForm.valid) {
-      const horario = this.gerarHorarioUnico();
       const agendamento = {
-        ...this.agendamentoForm.value,
-        data: horario
+        ...this.agendamentoForm.value
       };
 
       this.agendamentoService.salvarAgendamento(agendamento).subscribe(
-        () => this.router.navigate(['/card-info'], { queryParams: agendamento }),
-        (error) => console.error('Erro ao salvar agendamento:', error)
+        () => {
+          alert('Agendamento realizado com sucesso!');
+          this.router.navigate(['/card-info'], { queryParams: agendamento });
+        },
+        (error) => alert('Erro ao salvar agendamento. Tente novamente mais tarde.')
       );
     } else {
       alert('Preencha todos os campos');
     }
-  }
-
-  gerarHorarioUnico(): string {
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-
-    if (minutes < 30) {
-      minutes = 30;
-    } else {
-      minutes = 0;
-      hours = (hours + 1) % 24;
-    }
-
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 }
