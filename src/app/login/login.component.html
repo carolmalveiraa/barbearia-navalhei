@@ -1,0 +1,15 @@
+<p>Barbearia Navalhei</p>
+
+<mat-form-field>
+    <input matInput placeholder="Usuário" [(ngModel)]="usuario">
+    <mat-error *ngIf="usuarioControl.hasError('required')">Usuário é obrigatório.</mat-error>
+    <mat-error *ngIf="usuarioControl.hasError('minlength')">Usuário deve ter pelo menos 6 caracteres.</mat-error>
+</mat-form-field>
+
+<mat-form-field>
+    <input matInput placeholder="Senha" [(ngModel)]="senha">
+    <mat-error *ngIf="senhaControl.hasError('required')">Senha é obrigatória.</mat-error>
+    <mat-error *ngIf="senhaControl.hasError('minlength')">Senha deve ter pelo menos 6 caracteres.
+    <mat-error *ngIf="senhaControl.hasError('pattern')">Senha não pode conter caracteres especiais.</mat-error>
+    <mat-error *ngIf="senhaControl.hasError('passwordMismatch')">Senhas não conferem.</mat-error>
+</mat-error>
