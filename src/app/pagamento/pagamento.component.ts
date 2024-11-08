@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,12 +19,12 @@ import { ActivatedRoute, Router } from '@angular/router';
     MatSnackBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
-  ]
+    MatSelectModule,
+  ],
 })
 export class PagamentoComponent {
   formaPagamento: string = 'cartao';
-  valor: number = 1;
+  valor: number = 0;
 
   constructor(
     private router: Router,
