@@ -1,33 +1,57 @@
 <mat-card>
   <mat-card-title>Pagamento</mat-card-title>
   <mat-card-content>
-    <p>Valor: R$ 50,00</p>
+    <p>Valor: R$ {{ valor }}</p>
     
-    <!-- Campo Número do Cartão -->
+    <!-- Opções de Pagamento -->
     <mat-form-field appearance="fill">
-      <mat-label>Número do Cartão</mat-label>
-      <input matInput placeholder="0000 0000 0000 0000" type="text" maxlength="19">
+      <mat-label>Forma de Pagamento</mat-label>
+      <mat-select [(value)]="formaPagamento">
+        <mat-option value="cartao">Cartão de Crédito</mat-option>
+        <mat-option value="pix">Pix</mat-option>
+        <mat-option value="boleto">Boleto Bancário</mat-option>
+      </mat-select>
     </mat-form-field>
 
-    <!-- Div para Validade e CVV -->
-    <div class="input-row">
-      
-      <!-- Campo Validade -->
-      <mat-form-field appearance="fill" class="half-width">
-        <mat-label>Validade</mat-label>
-        <input matInput placeholder="MM/AA" type="text" maxlength="5">
+    <!-- Campos para Cartão de Crédito -->
+    <div *ngIf="formaPagamento === 'cartao'">
+      <mat-form-field appearance="fill">
+        <mat-label>Número do Cartão</mat-label>
+        <input matInput placeholder="0000 0000 0000 0000" maxlength="19">
       </mat-form-field>
 
-      <!-- Campo CVV -->
-      <mat-form-field appearance="fill" class="half-width">
-        <mat-label>CVV</mat-label>
-        <input matInput placeholder="000" type="text" maxlength="3">
-      </mat-form-field>
+      <div class="input-row" style="display: flex; justify-content: space-between;">
+        <mat-form-field appearance="fill" style="flex: 1; margin-right: 8px;">
+          <mat-label>Validade</mat-label>
+          <input matInput placeholder="MM/AA" maxlength="5">
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" style="flex: 1;">
+          <mat-label>CVV</mat-label>
+          <input matInput placeholder="000" maxlength="3">
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
+        Confirmar Pagamento
+      </button>
     </div>
 
-    <!-- Botão Pagar -->
-    <button mat-raised-button color="accent" (click)="confirmarPagamento()">
-      Pagar R$ 50,00
-    </button>
+    <!-- Campos para Pix -->
+    <div *ngIf="formaPagamento === 'pix'">
+      <p>Chave Pix: pix&#64;example.com</p>
+      <img src="/barbearia-navalhei/assets/qrcode-fake.png" alt="QR Code Pix" style="width: 200px; height: 200px;">
+      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
+        Confirmar Pagamento
+      </button>
+    </div>
+
+    <!-- Campos para Boleto Bancário -->
+    <div *ngIf="formaPagamento === 'boleto'">
+      <p>O boleto será gerado e enviado para o seu e-mail.</p>
+      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
+        Confirmar Pagamento
+      </button>
+    </div>
   </mat-card-content>
 </mat-card>

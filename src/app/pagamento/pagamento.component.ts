@@ -1,12 +1,12 @@
 
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagamento',
@@ -15,21 +15,40 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     MatCardModule,
-    MatFormFieldModule,
     MatButtonModule,
     MatSnackBarModule,
-  ],
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
+  ]
 })
 export class PagamentoComponent {
+  formaPagamento: string = 'cartao';
+  valor: number = 1;
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
-  confirmarPagamento() {
-    this.snackBar.open('Pagamento realizado com sucesso!', 'Fechar', {
-      duration: 3000 // Duração de 3000 milissegundos (3 segundos)
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.valor = params['valor'] || 0;
     });
-    this.router.navigate(['/']); // Opcionalmente, navegue de volta para a página inicial ou outra página
+  }
+
+  confirmarPagamento() {
+    let mensagem = 'Pagamento realizado com sucesso!';
+    if (this.formaPagamento === 'boleto') {
+      mensagem = 'Boleto gerado e enviado para o seu e-mail!';
+    } else if (this.formaPagamento === 'pix') {
+      mensagem = 'Pagamento via Pix realizado com sucesso!';
+    }
+
+    this.snackBar.open(mensagem, 'Fechar', {
+      duration: 3000
+    });
+    this.router.navigate(['/']);
   }
 }
