@@ -8,32 +8,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AgendamentoComponent } from './agendamento/agendamento.component';
-import { CardInfoComponent } from './card-info/card-info.component';
-import { PagamentoComponent } from './pagamento/pagamento.component';
-import { routes } from './app.routes';
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    AgendamentoComponent,
-    CardInfoComponent,
-    PagamentoComponent
-  ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [] // Remova o AppComponent daqui
 })
 export class AppModule { }
