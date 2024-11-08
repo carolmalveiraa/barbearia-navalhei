@@ -6,7 +6,7 @@
     <!-- Opções de Pagamento -->
     <mat-form-field appearance="fill">
       <mat-label>Forma de Pagamento</mat-label>
-      <mat-select [(value)]="formaPagamento">
+      <mat-select [(value)]="formaPagamento" (selectionChange)="onFormaPagamentoChange()">
         <mat-option value="cartao">Cartão de Crédito</mat-option>
         <mat-option value="pix">Pix</mat-option>
         <mat-option value="boleto">Boleto Bancário</mat-option>
@@ -14,44 +14,52 @@
     </mat-form-field>
 
     <!-- Campos para Cartão de Crédito -->
-    <div *ngIf="formaPagamento === 'cartao'">
+    <div *ngIf="formaPagamento === 'cartao'" class="payment-details">
       <mat-form-field appearance="fill">
-        <mat-label>Número do Cartão</mat-label>
-        <input matInput placeholder="0000 0000 0000 0000" maxlength="19">
+        <mat-label>Nome do Titular</mat-label>
+        <input matInput placeholder="Nome como no cartão">
       </mat-form-field>
 
-      <div class="input-row" style="display: flex; justify-content: space-between;">
+      <mat-form-field appearance="fill">
+        <mat-label>Número do Cartão</mat-label>
+        <input matInput placeholder="0000 0000 0000 0000" mask="0000 0000 0000 0000" maxlength="19">
+      </mat-form-field>
+
+      <div class="input-row">
         <mat-form-field appearance="fill" style="flex: 1; margin-right: 8px;">
           <mat-label>Validade</mat-label>
-          <input matInput placeholder="MM/AA" maxlength="5">
+          <input matInput placeholder="MM/AA" mask="00/00"  maxlength="5">
         </mat-form-field>
         
         <mat-form-field appearance="fill" style="flex: 1;">
           <mat-label>CVV</mat-label>
-          <input matInput placeholder="000" maxlength="3">
+          <input matInput placeholder="000" mask="000" maxlength="3">
         </mat-form-field>
       </div>
-
-      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
-        Confirmar Pagamento
-      </button>
     </div>
 
     <!-- Campos para Pix -->
-    <div *ngIf="formaPagamento === 'pix'">
-      <p>Chave Pix: pix&#64;example.com</p>
-      <img src="/barbearia-navalhei/assets/qrcode-fake.png" alt="QR Code Pix" style="width: 200px; height: 200px;">
-      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
-        Confirmar Pagamento
-      </button>
+    <div *ngIf="formaPagamento === 'pix'" class="payment-details">
+      <h3>Pagamento via Pix</h3>
+      <p>Escaneie o QR Code ou use a chave Pix abaixo:</p>
+      <img src="https://media.istockphoto.com/id/1347277582/vector/qr-code-sample-for-smartphone-scanning-on-white-background.jpg?s=612x612&w=0&k=20&c=6e6Xqb1Wne79bJsWpyyNuWfkrUgNhXR4_UYj3i_poc0=" alt="Fake Pix QR Code" style="width: 200px; height: 200px;">
+      <p>Chave Pix: {{ chavePix }}</p>
     </div>
 
     <!-- Campos para Boleto Bancário -->
-    <div *ngIf="formaPagamento === 'boleto'">
-      <p>O boleto será gerado e enviado para o seu e-mail.</p>
-      <button mat-raised-button color="accent" (click)="confirmarPagamento()">
-        Confirmar Pagamento
-      </button>
+    <div *ngIf="formaPagamento === 'boleto'" class="payment-details">
+      <h3>Boleto Bancário</h3>
+      <p>O boleto será gerado com os seguintes dados:</p>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput placeholder="Digite seu nome completo">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>CPF</mat-label>
+        <input matInput placeholder="000.000.000-00" mask="000.000.000-00">
+      </mat-form-field>
     </div>
+
+    <button mat-raised-button color="accent" (click)="confirmarPagamento()" [disabled]="!isPagamentoValido()">Confirmar Pagamento</button>
   </mat-card-content>
 </mat-card>

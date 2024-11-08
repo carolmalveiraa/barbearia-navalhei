@@ -26,6 +26,19 @@ import { CommonModule } from '@angular/common';
 export class PagamentoComponent implements OnInit {
   formaPagamento: string = '';
   valor: number = 50.00;
+  chavePix: string = 'barbearia.navalhaei@pix.com';
+
+    // Dados para Cartão de Crédito
+    cartaoTitular: string = '';
+    cartaoNumero: string = '';
+    cartaoValidade: string = '';
+    cartaoCVV: string = '';
+  
+    // Dados para Boleto
+    boletoDadosCliente = {
+      nome: '',
+      cpf: ''
+    };
 
   constructor(
     private router: Router,
@@ -37,6 +50,32 @@ export class PagamentoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.valor = +params['valor'] || this.valor;
     });
+  }
+
+  onFormaPagamentoChange() {
+    // Resetar campos quando a forma de pagamento muda
+    this.cartaoTitular = '';
+    this.cartaoNumero = '';
+    this.cartaoValidade = '';
+    this.cartaoCVV = '';
+    this.boletoDadosCliente = { nome: '', cpf: '' };
+  }
+
+  isPagamentoValido(): boolean {
+    switch(this.formaPagamento) {
+      case 'cartao':
+        return !!(this.cartaoTitular && 
+                  this.cartaoNumero && 
+                  this.cartaoValidade && 
+                  this.cartaoCVV);
+      case 'pix':
+        return true; // Pix sempre válido
+      case 'boleto':
+        return !!(this.boletoDadosCliente.nome && 
+                  this.boletoDadosCliente.cpf);
+      default:
+        return false;
+    }
   }
 
   confirmarPagamento() {
@@ -55,15 +94,21 @@ export class PagamentoComponent implements OnInit {
     }
 
     let mensagem = 'Pagamento realizado com sucesso!';
-    if (this.formaPagamento === 'boleto') {
-      mensagem = 'Boleto gerado e enviado para o seu e-mail!';
-    } else if (this.formaPagamento === 'pix') {
-      mensagem = 'Pagamento via Pix realizado com sucesso!';
+    if (this.formaPagamento === 'cartao') {
+      mensagem += ` Cartão: ${this.cartaoNumero}`;
+    } else if (this.formaPagamento === 'boleto') {
+      mensagem += ` Boleto gerado para: ${this.boletoDadosCliente.nome}`;
     }
 
     this.snackBar.open(mensagem, 'Fechar', {
       duration: 2000
     });
+
+    // Simular processamento do pagamento
+    setTimeout(() => this.voltar(), 2000);
+  }
+
+  voltar() {
     this.router.navigate(['/']);
   }
 }
