@@ -4,7 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; // Adicione esta linha
+import { RouterModule } from '@angular/router'; // Adicione esta linha se não estiver importada
 
 @Component({
   selector: 'app-agendamento',
@@ -16,7 +17,8 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterModule // Adicione RouterModule aqui
   ]
 })
 export class AgendamentoComponent {

@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule,
+    RouterModule.forRoot([]), // Adicione as rotas aqui se necessário
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
