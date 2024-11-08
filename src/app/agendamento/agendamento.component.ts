@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -12,25 +12,22 @@ import { AgendamentoService } from '../services/agendamento.service';
 
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
-export class AgendamentoComponent {
-  agendamentoForm: FormGroup;
-  servicos: string[] = ['Corte de cabelo', 'Barba', 'Corte e Barba', 'Coloração'];
-  horariosDisponiveis: string[] = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30'];
-  minDate: Date = new Date();
-
+export class AgendamentoService {
+  private agendamentos: any[] = [];
   salvarAgendamento(agendamento: any): Observable<any> {
     this.agendamentos.push(agendamento);
     return of(agendamento); // Simula uma chamada HTTP bem-sucedida
   }
-
   getAgendamentos() {
     return this.agendamentos;
   }
 }
+
+export { AgendamentoService };
+
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
