@@ -4,9 +4,16 @@
     
     <mat-form-field appearance="fill">
       <mat-label>Nome</mat-label>
-      <input matInput formControlName="nome" placeholder="Digite seu nome">
+      <input 
+        matInput 
+        formControlName="nome" 
+        placeholder="Digite seu nome"
+      >
       <mat-error *ngIf="agendamentoForm.get('nome')?.hasError('required')">
         Nome é obrigatório
+      </mat-error>
+      <mat-error *ngIf="agendamentoForm.get('nome')?.hasError('minlength')">
+        Nome deve ter no mínimo 2 caracteres
       </mat-error>
     </mat-form-field>
 
