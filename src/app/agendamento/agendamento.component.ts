@@ -4,8 +4,23 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router'; // Adicione esta linha
-import { RouterModule } from '@angular/router'; // Adicione esta linha se não estiver importada
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AgendamentoService {
+  private agendamentos: any[] = [];
+
+  salvarAgendamento(agendamento: any) {
+    this.agendamentos.push(agendamento);
+  }
+
+  getAgendamentos() {
+    return this.agendamentos;
+  }
+}
 
 @Component({
   selector: 'app-agendamento',
@@ -17,29 +32,31 @@ import { RouterModule } from '@angular/router'; // Adicione esta linha se não e
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    RouterModule // Adicione RouterModule aqui
+    MatButtonModule
   ]
 })
 export class AgendamentoComponent {
   nome: string = '';
+  servico: string = '';
+  dataAgendamento: Date = new Date();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private agendamentoService: AgendamentoService // Verifique a injeção do serviço
+  ) {}
 
   agendar() {
-    if (this.nome) {
-      const horario = this.gerarHorarioUnico();
-      this.router.navigate(['/card-info'], { queryParams: { nome: this.nome, horario: horario } });
-    } else {
-      alert('Por favor, insira um nome');
-    }
-  }
+    if (this.nome && this.servico) {
+      const agendamento = {
+        nome: this.nome,
+        servico: this.servico,
+        data: this.dataAgendamento,
+      };
 
-  gerarHorarioUnico(): string {
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    return `${hours}:${minutes}:${seconds}`;
+      this.agendamentoService.salvarAgendamento(agendamento);  // Verifique se este método existe no serviço
+      this.router.navigate(['/card-info']);
+    } else {
+      alert('Preencha todos os campos');
+    }
   }
 }

@@ -1,14 +1,14 @@
 <mat-card>
-  <mat-card-title>Login</mat-card-title>
+  <mat-card-title>Login Barbearia Navalhei</mat-card-title>
   <mat-card-content>
-    <form>
+    <form (ngSubmit)="login()">
       <mat-form-field>
-        <input matInput placeholder="Usuário" [(ngModel)]="usuario" name="usuario">
+        <input matInput placeholder="Usuário" [(ngModel)]="usuario" name="usuario" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Senha" [(ngModel)]="senha" name="senha" type="password">
+        <input matInput type="password" placeholder="Senha" [(ngModel)]="senha" name="senha" required>
       </mat-form-field>
-      <button mat-raised-button (click)="login()">Entrar</button>
+      <button mat-raised-button color="primary" type="submit">Entrar</button>
     </form>
   </mat-card-content>
 </mat-card>

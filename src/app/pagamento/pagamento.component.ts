@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { NgxMaskModule } from 'ngx-mask';
 
 @Component({
   selector: 'app-pagamento',
@@ -10,14 +12,21 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule,
+    NgxMaskModule.forRoot() // Verifique a versão do ngx-mask
   ]
 })
 export class PagamentoComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   confirmarPagamento() {
-    alert('Pagamento realizado com sucesso!');
+    this.snackBar.open('Pagamento realizado com sucesso!', 'Fechar', {
+      duration: 3000
+    });
     this.router.navigate(['/']);
   }
 }

@@ -26,8 +26,8 @@ export class LoginComponent {
   constructor(private router: Router) {}  // Injete o Router no construtor
 
   login() {
-    if (this.usuario === 'admin' && this.senha === 'admin') {
-      this.router.navigate(['/agendamento']); // Use o router para navegar
+    if (this.usuario && this.senha) {
+      this.router.navigate(['/agendamento']);
     } else {
       alert('Usuário ou senha inválidos');
     }

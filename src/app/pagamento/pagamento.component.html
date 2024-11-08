@@ -2,6 +2,25 @@
   <mat-card-title>Pagamento</mat-card-title>
   <mat-card-content>
     <p>Valor: R$ 50,00</p>
-    <button mat-raised-button (click)="confirmarPagamento()">Confirmar Pagamento</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Número do Cartão</mat-label>
+      <input matInput placeholder="0000 0000 0000 0000" mask="0000 0000 0000 0000">
+    </mat-form-field>
+    
+    <div class="row" style="display: flex; justify-content: space-between;">
+      <mat-form-field appearance="fill" style="flex: 1; margin-right: 8px;">
+        <mat-label>Validade</mat-label>
+        <input matInput placeholder="MM/AA" mask="00/00">
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill" style="flex: 1;">
+        <mat-label>CVV</mat-label>
+        <input matInput placeholder="000" mask="000">
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="accent" (click)="confirmarPagamento()">
+      Pagar R$ 50,00
+    </button>
   </mat-card-content>
 </mat-card>

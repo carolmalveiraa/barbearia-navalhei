@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-info',
@@ -16,14 +16,19 @@ import { Router } from '@angular/router';
 })
 export class CardInfoComponent implements OnInit {
   nome: string = '';
-  horario: string = '';
+  servico: string = '';
+  data: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.nome = params['nome'] || 'Fulano';
-      this.horario = params['horario'] || '14:00';
+      this.servico = params['servico'] || 'Corte de cabelo';
+      this.data = params['data'] || '14:00';
     });
   }
 
