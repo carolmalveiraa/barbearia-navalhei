@@ -1,10 +1,10 @@
 <mat-card>
   <form [formGroup]="agendamentoForm" (ngSubmit)="agendar()">
     <h2>Agende seu Serviço</h2>
-
+    
     <mat-form-field appearance="fill">
       <mat-label>Nome</mat-label>
-      <input matInput formControlName="nome" required>
+      <input matInput formControlName="nome" placeholder="Digite seu nome">
       <mat-error *ngIf="agendamentoForm.get('nome')?.hasError('required')">
         Nome é obrigatório
       </mat-error>

@@ -18,6 +18,7 @@ export class CardInfoComponent implements OnInit {
   nome: string = '';
   servico: string = '';
   data: string = '';
+  horario: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +29,8 @@ export class CardInfoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.nome = params['nome'] || 'Fulano';
       this.servico = params['servico'] || 'Corte de cabelo';
-      this.data = params['data'] || '14:00';
+      this.data = params['dataAgendamento'] || '14:00';
+      this.horario = params['horario'] || '14:00';
     });
   }
 

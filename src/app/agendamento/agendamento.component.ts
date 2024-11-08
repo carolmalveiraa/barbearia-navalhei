@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -8,32 +8,29 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { AgendamentoService } from '../services/agendamento.service';
-
+import { AgendamentoService } from '../services/agendamento.service';
 
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AgendamentoService {
-  private agendamentos: any[] = [];
+export class AgendamentoComponent {
+  agendamentoForm: FormGroup;
+  servicos: string[] = ['Corte de cabelo', 'Barba', 'Corte e Barba', 'Coloração'];
+  horariosDisponiveis: string[] = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '14:00', '14:30', '15:00', '15:30'];
+  minDate: Date = new Date();
 
   salvarAgendamento(agendamento: any): Observable<any> {
-    try {
-      this.agendamentos.push(agendamento);
-      return of(agendamento); // Simula uma chamada HTTP bem-sucedida
-    } catch (error) {
-      return throwError(() => new Error('Falha ao salvar agendamento'));
-    }
+    this.agendamentos.push(agendamento);
+    return of(agendamento); // Simula uma chamada HTTP bem-sucedida
   }
 
   getAgendamentos() {
     return this.agendamentos;
   }
 }
-
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
@@ -59,7 +56,7 @@ export class AgendamentoComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    @Inject(AgendamentoService) private agendamentoService: AgendamentoService
+    private agendamentoService: AgendamentoService
   ) {
     this.agendamentoForm = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -76,11 +73,8 @@ export class AgendamentoComponent {
       };
 
       this.agendamentoService.salvarAgendamento(agendamento).subscribe(
-        () => {
-          alert('Agendamento realizado com sucesso!');
-          this.router.navigate(['/card-info'], { queryParams: agendamento });
-        },
-        (error) => alert('Erro ao salvar agendamento. Tente novamente mais tarde.')
+        () => this.router.navigate(['/card-info'], { queryParams: agendamento }),
+        (error) => console.error('Erro ao salvar agendamento:', error)
       );
     } else {
       alert('Preencha todos os campos');
