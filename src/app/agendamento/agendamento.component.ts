@@ -28,9 +28,18 @@ export class AgendamentoComponent {
 
   agendar() {
     if (this.nome) {
-      this.router.navigate(['/card-info']), { queryParams: { nome: this.nome } });
+      const horario = this.gerarHorarioUnico();
+      this.router.navigate(['/card-info'], { queryParams: { nome: this.nome, horario: horario } });
     } else {
       alert('Por favor, insira um nome');
     }
+  }
+
+  gerarHorarioUnico(): string {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    return `${hours}:${minutes}:${seconds}`;
   }
 }

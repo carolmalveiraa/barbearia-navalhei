@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -13,19 +14,24 @@ import { Router } from '@angular/router';
     MatButtonModule
   ]
 })
-export class CardInfoComponent {
+export class CardInfoComponent implements OnInit {
   nome: string = '';
-  horario: string = '14:00';
+  horario: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.nome = params['nome'] || 'Fulano';
+      this.horario = params['horario'] || '14:00';
     });
   }
-  
+
   pagar() {
     this.router.navigate(['/pagamento']);
+  }
+
+  voltar() {
+    this.router.navigate(['/']);
   }
 }
