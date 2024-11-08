@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AgendamentoService, Agendamento } from '../services/agendamento.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-agendamento',
@@ -23,7 +25,8 @@ import { AgendamentoService, Agendamento } from '../services/agendamento.service
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    CommonModule
   ]
 })
 export class AgendamentoComponent {
