@@ -4,6 +4,7 @@ import { AgendamentoComponent } from './agendamento/agendamento.component';
 import { CardInfoComponent } from './card-info/card-info.component';
 import { PagamentoComponent } from './pagamento/pagamento.component';
 
+
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
