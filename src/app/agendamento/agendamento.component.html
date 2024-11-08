@@ -1,22 +1,23 @@
 <mat-card>
-  <mat-card-title>Agendamento de Serviço</mat-card-title>
+  <mat-card-title>Agendamento</mat-card-title>
   <mat-card-content>
-    <form (ngSubmit)="agendar()">
-      <mat-form-field>
-        <input matInput placeholder="Nome" [(ngModel)]="nome" name="nome" required>
+    <form [formGroup]="agendamentoForm" (ngSubmit)="agendar()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" placeholder="Digite seu nome">
+        <mat-error *ngIf="agendamentoForm.get('nome').invalid">Nome é obrigatório</mat-error>
       </mat-form-field>
-      
-      <mat-radio-group [(ngModel)]="servico" name="servico">
-        <mat-radio-button value="corte">Corte de Cabelo</mat-radio-button>
-        <mat-radio-button value="barba">Barba</mat-radio-button>
-      </mat-radio-group>
 
-      <mat-form-field>
-        <mat-label>Escolha um horário</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="dataAgendamento" name="data">
-        <mat-hint>DD/MM/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+      <mat-form-field appearance="fill">
+        <mat-label>Serviço</mat-label>
+        <input matInput formControlName="servico" placeholder="Digite o serviço">
+        <mat-error *ngIf="agendamentoForm.get('servico').invalid">Serviço é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Data</mat-label>
+        <input matInput formControlName="dataAgendamento" placeholder="Digite a data">
+        <mat-error *ngIf="agendamentoForm.get('dataAgendamento').invalid">Data é obrigatória</mat-error>
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">Agendar</button>

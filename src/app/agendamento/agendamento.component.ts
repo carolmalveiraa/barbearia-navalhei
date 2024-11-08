@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ import { Injectable } from '@angular/core';
 export class AgendamentoService {
   private agendamentos: any[] = [];
 
-  salvarAgendamento(agendamento: any) {
+  salvarAgendamento(agendamento: any): Observable<any> {
     this.agendamentos.push(agendamento);
+    return of(agendamento); // Simula uma chamada HTTP bem-sucedida
   }
 
   getAgendamentos() {
@@ -28,7 +30,7 @@ export class AgendamentoService {
   styleUrls: ['./agendamento.component.scss'],
   standalone: true,
   imports: [
-    FormsModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -36,27 +38,49 @@ export class AgendamentoService {
   ]
 })
 export class AgendamentoComponent {
-  nome: string = '';
-  servico: string = '';
-  dataAgendamento: Date = new Date();
+  agendamentoForm: FormGroup;
 
   constructor(
     private router: Router,
-    private agendamentoService: AgendamentoService // Verifique a injeção do serviço
-  ) {}
+    private formBuilder: FormBuilder,
+    private agendamentoService: AgendamentoService
+  ) {
+    this.agendamentoForm = this.formBuilder.group({
+      nome: ['', Validators.required],
+      servico: ['', Validators.required],
+      dataAgendamento: ['', Validators.required]
+    });
+  }
 
   agendar() {
-    if (this.nome && this.servico) {
+    if (this.agendamentoForm.valid) {
+      const horario = this.gerarHorarioUnico();
       const agendamento = {
-        nome: this.nome,
-        servico: this.servico,
-        data: this.dataAgendamento,
+        ...this.agendamentoForm.value,
+        data: horario
       };
 
-      this.agendamentoService.salvarAgendamento(agendamento);  // Verifique se este método existe no serviço
-      this.router.navigate(['/card-info']);
+      this.agendamentoService.salvarAgendamento(agendamento).subscribe(
+        () => this.router.navigate(['/card-info'], { queryParams: agendamento }),
+        (error) => console.error('Erro ao salvar agendamento:', error)
+      );
     } else {
       alert('Preencha todos os campos');
     }
+  }
+
+  gerarHorarioUnico(): string {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+
+    if (minutes < 30) {
+      minutes = 30;
+    } else {
+      minutes = 0;
+      hours = (hours + 1) % 24;
+    }
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 }
