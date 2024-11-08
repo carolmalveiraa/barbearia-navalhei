@@ -11,13 +11,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AgendamentoComponent } from './agendamento/agendamento.component';
+import { CardInfoComponent } from './card-info/card-info.component';
+import { PagamentoComponent } from './pagamento/pagamento.component';
 import { routes } from './app.routes';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AgendamentoComponent
+    AgendamentoComponent,
+    CardInfoComponent,
+    PagamentoComponent
   ],
   imports: [
     BrowserModule,
