@@ -12,14 +12,11 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Serviço</mat-label>
-      <mat-select formControlName="servico" required>
+      <mat-select formControlName="servico">
         <mat-option *ngFor="let servico of servicos" [value]="servico">
           {{ servico }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="agendamentoForm.get('servico')?.hasError('required')">
-        Serviço é obrigatório
-      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
@@ -34,14 +31,11 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Horário</mat-label>
-      <mat-select formControlName="horario" required>
+      <mat-select formControlName="horario">
         <mat-option *ngFor="let horario of horariosDisponiveis" [value]="horario">
           {{ horario }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="agendamentoForm.get('horario')?.hasError('required')">
-        Horário é obrigatório
-      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">Agendar</button>
