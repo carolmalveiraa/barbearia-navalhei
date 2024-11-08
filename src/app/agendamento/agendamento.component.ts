@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-agendamento',
   templateUrl: './agendamento.component.html',
-  styleUrls: ['./agendamento.component.css']
+  styleUrls: ['./agendamento.component.scss']
 })
 export class AgendamentoComponent {
   nome: string = '';

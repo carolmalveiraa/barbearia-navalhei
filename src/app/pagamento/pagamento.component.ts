@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-pagamento',
   templateUrl: './pagamento.component.html',
-  styleUrls: ['./pagamento.component.css']
+  styleUrls: ['./pagamento.component.scss']
 })
 export class PagamentoComponent {
   constructor(private router: Router) {}
